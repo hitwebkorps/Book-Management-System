@@ -113,7 +113,7 @@ def get_book_by_id(book_id: int, db: Session = Depends(get_db)):
 
 
 
-stripe.api_key = os.environ["STRIPE_API_KEY"]
+stripe.api_key = os.environ["STRIPE_SECRET_KEY"]
 
 @app.post("/books/{book_id}/pay_with_card")
 def pay_for_book_with_card(
@@ -167,7 +167,7 @@ def pay_for_book_with_card(
 
 
 GOOGLE_BOOKS_API = "https://www.googleapis.com/books/v1/volumes"
-API_KEY = os.environ.get("GOOGLE_API_KEY")
+API_KEY = os.environ.get("GOOGLE_BOOKS_API_KEY")
 
 
 @app.get("/google/books/search")
