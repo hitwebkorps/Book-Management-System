@@ -1,0 +1,18 @@
+[alembic_version]
+    *version_num {label:"VARCHAR(32)"}
+[users]
+    *id {label:"INTEGER"}
+    email {label:"VARCHAR"}
+    password {label:"VARCHAR"}
+    role {label:"VARCHAR"}
+    username {label:"VARCHAR"}
+[books]
+    *id {label:"INTEGER"}
+    author {label:"VARCHAR"}
+    description {label:"VARCHAR"}
+    owner_id {label:"INTEGER"}
+    price {label:"INTEGER"}
+    seller_id {label:"INTEGER"}
+    title {label:"VARCHAR"}
+users."id" ?--* books."owner_id"
+users."id" ?--* books."seller_id"
