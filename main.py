@@ -64,6 +64,19 @@ def read_root():
     logger.info("Root endpoint hit")
     return {"message": "BookStore API is Working...."}
 
+@app.post("/signup", response_model=user_schema.UserResponse)
+def signup(user_data: user_schema.UserCreate, db: Session = Depends(get_db)):
+    existing_user = user_service.get_user_service(db, user_data.email)
+    if existing_user:
+        logger.warning(f"Signup attempt with existing email: {user_data.email}")
+        raise HTTPException(status_code=400, detail="Email already registered")
+
+    new_user = user_service.create_user_service(db, user_data)
+    logger.info(f"New user signed up: {new_user.email}, Role: {new_user.role}")
+
+    return new_user
+
+
 @app.post("/login")
 def login(login_data: user_schema.UserLogin, db: Session = Depends(get_db)):
     user = user_service.authenticate_user_service(db, login_data)
